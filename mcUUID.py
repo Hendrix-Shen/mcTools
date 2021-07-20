@@ -5,7 +5,7 @@ import urllib.request
 
 class PlayerListReadMode():
     WHITELIST = "whitelist"
-    USER_CACHE = "userCache"
+    USER_CACHE = "usercache"
 
 def loadJsonFromFile(filePath):
     with open(filePath, 'r') as f:
@@ -23,9 +23,12 @@ def getJavaUUID(uuid):
     return "{}-{}-{}-{}-{}".format(uuid[:8], uuid[8:12], uuid[12:16], uuid[16:20], uuid[20:])
 
 def getOnlineUUID(playerName):
-    data = getData("https://api.mojang.com/users/profiles/minecraft/{}".format(playerName))
-    data = json.loads(data)
-    return getJavaUUID(data["id"])
+    try:
+        data = getData("https://api.mojang.com/users/profiles/minecraft/{}".format(playerName))
+        data = json.loads(data)
+        return getJavaUUID(data["id"])
+    except:
+        return None
 
 def getOfflineUUID(playerName):
     playerName = "OfflinePlayer:{}".format(playerName)

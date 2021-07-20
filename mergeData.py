@@ -30,7 +30,6 @@ def mergeStatsData(fileAPath, fileBPath):
                     mergedData["stats"][i][j] = statsData1["stats"][i][j]
                 else:
                     mergedData["stats"][i][j] = statsData1["stats"][i][j] + statsData2["stats"][i][j]
-    print(mergedData)
     return mergedData
 
 def mergeStats(worldName = "world", 
@@ -54,6 +53,7 @@ def mergeStats(worldName = "world",
                 continue
             mcUUID.saveJsonToFile("{}/{}.json".format(targetPath, playerList[i]["OffineUUID"]), mergedData)
     elif (mergeMode == MergeStatsMode().OFFLINE2ONLINE):
+        pass
         # TODO
     else:
         print("Error: Undefined mode!")
@@ -62,4 +62,3 @@ def mergeStats(worldName = "world",
         os.makedirs("./merged/stats")
     
 mergeStats(uuideMode = mcUUID.PlayerListReadMode().USER_CACHE)
-    
