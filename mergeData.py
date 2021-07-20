@@ -38,6 +38,8 @@ def mergeStats(worldName = "world",
     targetPath = "./merged/stats"
     worldPath = "./{}".format(worldName)
     playerList = fetchUUID(uuideMode)
+    if (not os.path.isdir("./merged/stats")):
+        os.makedirs("./merged/stats")
     if (mergeMode == MergeStatsMode().ONLINE2OFFLILE):
         for i in playerList:
             fileAPath = "{}/stats/{}.json".format(worldPath, playerList[i]["OnineUUID"])
@@ -45,10 +47,11 @@ def mergeStats(worldName = "world",
             if (os.path.isfile(fileAPath) and os.path.isfile(fileBPath)):
                 mergedData = mergeStatsData(fileAPath, fileBPath)
             elif (os.path.isfile(fileAPath)):
-                mergeData = mcUUID.loadJsonFromFile(fileAPath)
+                mergedData = mcUUID.loadJsonFromFile(fileAPath)
             elif (os.path.isfile(fileBPath)):
-                mergeData = mcUUID.loadJsonFromFile(fileBPath)
+                mergedData = mcUUID.loadJsonFromFile(fileBPath)
             else:
+                mergedData = {}
                 print("Warning: Cant find any data with {}".format(i))
                 continue
             mcUUID.saveJsonToFile("{}/{}.json".format(targetPath, playerList[i]["OffineUUID"]), mergedData)
@@ -58,7 +61,5 @@ def mergeStats(worldName = "world",
     else:
         print("Error: Undefined mode!")
         return
-    if (not os.path.isdir("./merged/stats")):
-        os.makedirs("./merged/stats")
     
 mergeStats(uuideMode = mcUUID.PlayerListReadMode().USER_CACHE)

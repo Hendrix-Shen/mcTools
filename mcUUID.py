@@ -63,5 +63,3 @@ def getPlayerListFromUserCache():
 
 def getPlayerListFromWhitelist():
     return getPlayerList(PlayerListReadMode().WHITELIST)
-    
-getPlayerListFromWhitelist()
