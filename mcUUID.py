@@ -40,7 +40,7 @@ def getOfflineUUID(playerName):
     charArray[8] = chr(ord(charArray[8]) & 0x3f | 0x80)
     playerUUID = ""
     for i in range(len(charArray)):
-        playerUUID += "{:0^2}".format(hex(ord(charArray[i]))[2:])
+        playerUUID += "{:0>2}".format(hex(ord(charArray[i]))[2:])
     return getJavaUUID(playerUUID)
     
 def getPlayerList(mode = None):
@@ -53,8 +53,9 @@ def getPlayerList(mode = None):
         return None
     cache = loadJsonFromFile(filename)
     playerList = []
-    for items in cache:
-        playerList.append(items["name"])
+    for item in cache:
+        if item["name"] not in playerList:
+            playerList.append(item["name"])
     return playerList
     
 
